@@ -1,0 +1,29 @@
+---
+- name: Ubuntu source
+  include_tasks: "{{ Ubuntu_source }}/main.yml"
+  when: Ubuntu_source != "default"
+
+- name: Dependencies
+  ansible.builtin.apt:
+    pkg:
+    - git
+    - make
+    - pandoc
+    - zip
+    # - nosetests
+  become: true
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: "{{ git_dir }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+  become: true
+
+- name: Git checkout
+  ansible.builtin.git:
+    repo: "{{ git_url }}"
+    dest: "{{ git_dir }}"
+    # version: release-0.22

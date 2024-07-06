@@ -1,0 +1,9 @@
+in: "native"
+repository: false
+source: "download"
+
+alt_repo_manager: false
+
+Ubuntu_source: default
+
+silverblue_default: Flatpak
